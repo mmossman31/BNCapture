@@ -1,0 +1,156 @@
+$Id: README 103553 2017-04-18 09:00:54Z gcosmo $
+
+    =========================================================
+    Geant4 - an Object-Oriented Toolkit for Simulation in HEP
+    =========================================================
+
+                       Boron Neutron Capture 
+                       -------------------- 
+
+  This simulation package is based on Geant4 example basic/B5. It simulates
+  neutron capture on a boron/SiO2 sphere.
+
+  1- GEOMETRY
+     Stainless steel cylinder, PE plate and boron/SiO2 sphere.
+
+  2- PHYSICS
+
+   This example uses the reference HP physics list. 
+
+
+  3- ACTION INITALIZATION
+
+   B5ActionInitialization class
+   instantiates and registers to Geant4 kernel all user action classes.
+   
+   While in sequential mode the action classes are instatiated just once,
+   via invoking the method:
+      B5ActionInitialization::Build() 
+   in multi-threading mode the same method is invoked for each thread worker
+   and so all user action classes are defined thread-local.
+
+   A run action class is instantiated both thread-local 
+   and global that's why its instance is created also in the method
+      B5ActionInitialization::BuildForMaster() 
+   which is invoked only in multi-threading mode.
+
+  4- PRIMARY GENERATOR
+
+   The primary generator action class employs the G4ParticleGun. 
+   The primary kinematics consists of a single particle which is 
+   is sent in the direction of the first spectrometer arm. 
+
+   The type of the particle and its several properties can be changed 
+   via the  G4 built-in commands of  the G4ParticleGun class or
+   this example command defined using the G4GenericMessenger class.
+       
+  
+  5- EVENT
+
+
+  6- DETECTOR RESPONSE:
+
+     All the information required to simulate and analyze an event is 
+     recorded in hits.  This information is recorded in the following 
+     sensitive detectors:
+
+       - boron sphere: 
+           particle time
+           particle position
+ 
+  7- ANALYSIS:
+
+   The analysis tools are used to accumulate statistics.
+   Histograms and an ntuple are created in B5RunAction::B5RunAction() 
+   constructor for the following quantities:
+
+   1D histograms:
+   - Number of hits in sphere 
+
+   2D histograms:
+   - sphere hit X vs Y positions
+   
+  8- BUILD OPTIONS:
+  
+  This example can be built with excluding visualization and/or
+  Geant4 user interface via G4VIS_USE and G4UI_USE compiler options 
+  (see exampleB5.cc).
+  These options are defined by default with Geant4 configuration;
+  they can be switched off at compilation time via the CMake options 
+  G4VIS_NONE or G4UI_NONE or via the environment variables of the 
+  same name if using GNUmake build.
+
+ The following paragraphs are common to all basic examples
+
+ A- VISUALISATION
+
+   The visualization manager is set via the G4VisExecutive class
+   in the main() function in exampleB5.cc.    
+   The initialisation of the drawing is done via a set of /vis/ commands
+   in the macro vis.mac. This macro is automatically read from
+   the main function when the example is used in interactive running mode.
+
+   By default, vis.mac opens an OpenGL viewer (/vis/open OGL).
+   The user can change the initial viewer by commenting out this line
+   and instead uncommenting one of the other /vis/open statements, such as
+   HepRepFile or DAWNFILE (which produce files that can be viewed with the
+   HepRApp and DAWN viewers, respectively).  Note that one can always
+   open new viewers at any time from the command line.  For example, if
+   you already have a view in, say, an OpenGL window with a name
+   "viewer-0", then
+      /vis/open DAWNFILE
+   then to get the same view
+      /vis/viewer/copyView viewer-0
+   or to get the same view *plus* scene-modifications
+      /vis/viewer/set/all viewer-0
+   then to see the result
+      /vis/viewer/flush
+
+   The DAWNFILE, HepRepFile drivers are always available
+   (since they require no external libraries), but the OGL driver requires
+   that the Geant4 libraries have been built with the OpenGL option.
+
+   vis.mac has additional commands that demonstrate additional functionality
+   of the vis system, such as displaying text, axes, scales, date, logo and
+   shows how to change viewpoint and style.
+   To see even more commands use help or ls or browse the available UI commands
+   in the Application Developers Guide.
+
+   For more information on visualization, including information on how to
+   install and run DAWN, OpenGL and HepRApp, see the visualization tutorials,
+   for example,
+   http://geant4.slac.stanford.edu/Presentations/vis/G4[VIS]Tutorial/G4[VIS]Tutorial.html
+   (where [VIS] can be replaced by DAWN, OpenGL and HepRApp)
+
+   The tracks are automatically drawn at the end of each event, accumulated
+   for all events and erased at the beginning of the next run.
+
+ B- USER INTERFACES
+ 
+   The user command interface is set via the G4UIExecutive class
+   in the main() function in exampleB5.cc 
+   The selection of the user command interface is then done automatically 
+   according to the Geant4 configuration or it can be done explicitly via 
+   the third argument of the G4UIExecutive constructor (see exampleB4a.cc). 
+ 
+ C- HOW TO RUN
+
+    - Execute exampleB5 in the 'interactive mode' with visualization:
+        % ./exampleB5
+      and type in the commands from run1.mac line by line:  
+        Idle> /control/verbose 2
+        Idle> /tracking/verbose 1
+        Idle> /run/beamOn 10 
+        Idle> ...
+        Idle> exit
+      or
+        Idle> /control/execute run1.mac
+        ....
+        Idle> exit
+
+    - Execute exampleB5  in the 'batch' mode from macro files 
+      (without visualization)
+        % ./exampleB5 run2.mac
+        % ./exampleB5 exampleB5.in > exampleB5.out
+
+	
