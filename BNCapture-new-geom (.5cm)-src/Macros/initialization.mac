@@ -1,0 +1,36 @@
+# Initializiation Macro
+/run/initialize
+/gps/particle neutron
+/gps/pos/type Volume
+/gps/pos/shape Para
+/gps/pos/centre 0 0 -0.5 cm
+/gps/pos/halfx .1 cm
+/gps/pos/halfy .1 cm
+/gps/pos/halfz .1 cm
+/gps/pos/paralp 0 deg
+/gps/pos/parthe 0 deg
+/gps/pos/parphi 0 deg
+/gps/hist/type energy
+/gps/hist/point 0 0.
+/gps/hist/point 1.5 0.
+/gps/hist/point 1.8 0.406504
+/gps/hist/point 2 0.439024
+/gps/hist/point 2.3 0.455285
+/gps/hist/point 2.8 0.406504
+/gps/hist/point 3 0.325203
+/gps/hist/point 3.5 0.260163
+/gps/hist/point 3.8 0.227642
+/gps/hist/point 4 0.162602
+/gps/hist/point 4.4 0.113821
+/gps/hist/point 5.3 0.0650407
+/gps/hist/point 6 0.0325203
+/gps/hist/point 7 0.0162602
+/gps/hist/point 8 0.00813008
+/gps/hist/point 10 0.00162602
+/gps/hist/point 12 0.
+/gps/ang/type iso
+/vis/open DAWNFILE
+/vis/drawVolume
+/vis/scene/add/trajectories
+/vis/scene/endOfEventAction accumulate
+/vis/viewer/set/viewpointThetaPhi 270. 0.

@@ -1,0 +1,13 @@
+#
+# Test macro file for exampleB5
+#
+
+/run/initialize
+
+# Turn off randomization 
+/B5/generator/randomizePrimary false
+/B5/generator/sigmaMomentum 0. 
+/B5/generator/sigmaAngle 0.
+/run/printProgress 5
+#
+/run/beamOn 500
